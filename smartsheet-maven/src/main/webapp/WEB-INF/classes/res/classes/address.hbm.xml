@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping package="com.ideas2it.model">
+<class name="com.ideas2it.model.Address" table="address">
+<id name="addressId" column="id" type="integer">
+<generator class="native"/>
+</id>
+<property name="addressType" column="address_type">
+</property>
+<property name="userType" column="user_type">
+</property>
+<property name="doorNumber" column="door_number">
+</property>
+<property name="street1" column="street_1">
+</property>
+<property name="street2" column="street_2">
+</property>
+<property name="city" column="city">
+</property>
+<property name="state" column="state">
+</property>
+<property name="country" column="country">
+</property>
+<property name="zipcode" column="zipcode">
+</property>
+<property name="isDeleted" not-null="true" >
+          <column sql-type="boolean" not-null="true" name="isdeleted"/>
+</property> 
+<many-to-one name="employee" class="com.ideas2it.model.Employee" cascade="all">
+            <column name="employee_id"></column>
+</many-to-one>
+<many-to-one name="client" class="com.ideas2it.model.Client" cascade="all">
+    <column name="client_id"></column>
+</many-to-one>   
+<filter name="isDeletedFilter" condition=":status != isdeleted "/>                        
+   </class>                
+       <filter-def name="isDeletedFilter">
+           <filter-param name="status" type="boolean"/>
+       </filter-def> 
+</hibernate-mapping>

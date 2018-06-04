@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+   "-//Hibernate/Hibernate Mapping DTD//EN"
+   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+   <class name="com.ideas2it.model.EmployeeHistory" table="employee_history">
+       <id name="id" column="employee_history_id" type="int" >
+           <generator class="native"/>
+       </id>      
+       <property name="createdDate" column="created_date" type="date">
+</property> 
+<property name="lastUpdated" column="last_updated" type="date">
+</property>   
+       <many-to-one name="employee" class="com.ideas2it.model.Employee">
+            <column name="employee_id"></column>
+       </many-to-one>
+       <many-to-one name="project" class="com.ideas2it.model.Project">
+            <column name="project_id"></column>
+       </many-to-one>                                      
+   </class>                        
+</hibernate-mapping>

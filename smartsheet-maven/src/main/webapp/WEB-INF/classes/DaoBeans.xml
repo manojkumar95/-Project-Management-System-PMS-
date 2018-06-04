@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       <import resource="/SessionFactoryBean.xml"/>
+        <bean id="employeeDao" class="com.ideas2it.dao.impl.EmployeeDaoImpl">
+            <property name="sessionFactory" ref="sessionFactory"/>
+        </bean>
+         <bean id="projectDao" class="com.ideas2it.dao.impl.ProjectDaoImpl">
+             <property name="sessionFactory" ref="sessionFactory"/>
+        </bean>
+         <bean id="clientDao" class="com.ideas2it.dao.impl.ClientDaoImpl">
+             <property name="sessionFactory" ref="sessionFactory"/>
+        </bean>
+        <bean id="addressDao" class="com.ideas2it.dao.impl.AddressDaoImpl">
+             <property name="sessionFactory" ref="sessionFactory"/>
+        </bean>
+        <bean id="employeeHistoryDao" class="com.ideas2it.dao.impl.EmployeeHistoryDaoImpl">
+             <property name="sessionFactory" ref="sessionFactory"/>
+        </bean>
+        <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+            <property name="exceptionMappings">
+                <props>
+                    <prop key="javax.servlet.ServletException">Errorpage</prop>
+                    <prop key="java.io.IOException">Errorpage</prop>
+                </props>
+            </property>
+        </bean>
+    </beans> 

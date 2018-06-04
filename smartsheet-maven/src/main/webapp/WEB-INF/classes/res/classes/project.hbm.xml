@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+   <class name="com.ideas2it.model.Project" table="project">
+       <id name="id" column="project_id">
+           <generator class="assigned"/>
+       </id>
+       <property name="title" column="project_title"/>
+       <property name="startDate" column="start_date"/>
+       <property name="endDate" column="end_date"/>
+       <property name="isDeleted" not-null="true" >
+          <column sql-type="boolean" not-null="true" name="isdeleted" />
+       </property>    
+       
+       <many-to-one name="client" class="com.ideas2it.model.Client" lazy="false">
+			<column name="client_id"></column>
+		</many-to-one>
+		
+<bag name="employees" table="employee" fetch="select" lazy="false" cascade="all">
+			<key>
+				<column name="project_id"></column>
+			</key>
+			<one-to-many class="com.ideas2it.model.Employee"/>
+</bag>		
+		
+<bag name="employeeHistories" table="employee_history" fetch="select" lazy="false" cascade="all">
+			<key>
+				<column name="employee_id"></column>
+			</key>
+			<one-to-many class="com.ideas2it.model.EmployeeHistory"/>
+</bag>
+<filter name="isDeletedFilter" condition=":status != isdeleted "/>                        
+   </class>                
+       <filter-def name="isDeletedFilter">
+           <filter-param name="status" type="boolean"/>
+       </filter-def>    
+</hibernate-mapping>
+

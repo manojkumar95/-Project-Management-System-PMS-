@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       <mvc:resources mapping="/resources/css/**" location="/resources/css/" />
+<mvc:resources mapping="/resources/images/**" location="/resources/images/" />
+<mvc:resources mapping="/resources/js/**" location="/resources/js/" />
+<context:component-scan base-package="com.ideas2it.controller"/>  
+<mvc:annotation-driven />  
+    <import resource="/classes/ServiceBeans.xml"/>
+		
+	    <bean id="loginController" class="com.ideas2it.controller.LogoutController"/>
+	    <bean id="logoutController" class="com.ideas2it.controller.LoginController"/>
+	    <bean class="com.ideas2it.controller.AuthenticateFilter"/>
+        <bean class="com.ideas2it.controller.EmployeeController" id="employeeController">
+    <property name="employeeService" ref="employeeService">
+    </property>
+</bean>
+<bean class="com.ideas2it.controller.ClientController" id="clientController">
+    <property name="clientService" ref="clientService">
+    </property>
+</bean>
+<bean class="com.ideas2it.controller.ProjectController" id="projectController">
+    <property name="projectService" ref="projectService">
+      </property>
+    <property name="employeeService" ref="employeeService">
+    </property>
+    <property name="clientService" ref="clientService">
+    </property>
+</bean>
+<bean class="com.ideas2it.controller.AddressController" id="addressController">
+    <property name="addressService" ref="addressService">
+    </property>
+    <property name="employeeService" ref="employeeService">
+    </property>
+    <property name="clientService" ref="clientService">
+    </property>
+</bean>
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+       <property name="mappings">
+        <props>
+           <prop key="/EmployeeController">employeeController</prop>
+            <prop key="/ClientController">clientController</prop>
+             <prop key="/ProjectController">projectController</prop>
+             <prop key="/LoginController">loginController</prop>
+             <prop key="/LogoutController">logoutController</prop>
+         </props>
+       </property>
+    </bean>
+
+        <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+            <property name="exceptionMappings">
+                <props>
+                    <prop key="javax.servlet.ServletException">Error</prop>
+                    <prop key="java.io.IOException">Error</prop>
+                </props>
+            </property>
+        </bean>
+        <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <property name="prefix" value="/WEB-INF/views/jsp/"/>
+            <property name="suffix" value=".jsp"/>
+        </bean>
+    </beans> 
