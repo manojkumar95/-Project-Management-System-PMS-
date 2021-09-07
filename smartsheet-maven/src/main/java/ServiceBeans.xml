@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+ 
+	<import resource="/DaoBeans.xml"/>
+        <bean id="employeeService" class="com.ideas2it.service.impl.EmployeeServiceImpl">
+            <property name="employeeDao" ref="employeeDao"/>
+        </bean>
+        <bean id="projectService" class="com.ideas2it.service.impl.ProjectServiceImpl">
+            <property name="projectDao" ref="projectDao"/>
+            <property name="employeeService" ref="employeeService"/>
+            <property name="clientService" ref="clientService"/>
+            <property name="employeeHistoryService" ref="employeeHistoryService"/>
+        </bean>
+        <bean id="employeeHistoryService" class="com.ideas2it.service.impl.EmployeeHistoryServiceImpl">
+            <property name="employeeHistoryDao" ref="employeeHistoryDao"/>
+        </bean>
+        <bean id="clientService" class="com.ideas2it.service.impl.ClientServiceImpl">
+            <property name="clientDao" ref="clientDao"/>
+            <property name="projectService" ref="projectService"/>
+        </bean>
+        <bean id="addressService" class="com.ideas2it.service.impl.AddressServiceImpl">
+            <property name="addressDao" ref="addressDao"/>
+            <property name="employeeService" ref="employeeService"/>
+            <property name="clientService" ref="clientService"/>
+        </bean>
+        <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+            <property name="exceptionMappings">
+                <props>
+                    <prop key="javax.servlet.ServletException">errorpage</prop>
+                    <prop key="java.io.IOException">errorpage</prop>
+                </props>
+            </property>
+        </bean>
+        <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+            <property name="prefix" value="/WEB-INF/jsp/"/>
+            <property name="suffix" value=".jsp"/>
+        </bean>
+    </beans> 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping package="com.ideas2it.model">
+<class name="com.ideas2it.model.Client" table="client">
+<id name="id" column="client_id" >
+<generator class="assigned"/>
+</id>
+<property name="emailId" column="client_mail_id" unique="true">
+</property>
+<property name="name" column="client_name">
+</property>
+<property name="designation" column="client_designation">
+</property>
+<property name="isDeleted" not-null="true" >
+          <column sql-type="boolean" not-null="true" name="isdeleted"/>
+</property> 
+<bag name="addresses" table="address" fetch="select" lazy="false" cascade="all">
+			<key>
+				<column name="client_id"></column>
+			</key>
+			<one-to-many class="com.ideas2it.model.Address"/>
+</bag>
+<bag name="projects" table="project" fetch="select" lazy="false" cascade="all">
+			<key>
+				<column name="client_id"></column>
+			</key>
+			<one-to-many class="com.ideas2it.model.Project"/>
+</bag>
+<filter name="isDeletedFilter" condition=":status != isdeleted "/>                        
+   </class>                
+       <filter-def name="isDeletedFilter">
+           <filter-param name="status" type="boolean"/>
+       </filter-def> 
+</hibernate-mapping>
